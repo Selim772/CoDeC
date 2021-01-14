@@ -39,70 +39,56 @@ int dechiffre(int* tmp)
 }
 
 int chiffre(int tmp, FILE*fp){
-    //printf("%d", tmp);
     int tab[8]={0};
-    //int tab1[8];
     int stockbin[8] = {0};
     int stockend[8] = {0};
             int c = tmp;
-            //printf("%d ", c);
             int x=0;
             int i = 0;
-            //printf("%d ", c);
-        while(c > 0) // On obtient le nombre binaire de tab_decimal[i] decimal(c) = binaire(10110001)
+
+        while(c > 0)
         {
             tab[7-x] = c%2;
-            //printf("%d", tab[7-x]);
+
             c = c/2;
-            //printf("%d", tab[7-x]);
-            x++;// là c'est la conversion du caractère decimal en binaire
-            //printf("%d", tab[7-x]);
-        }//printf("\n");
-            //printf("%d ", c);
-            /*for(int i = 0; i<8; i++){
-                printf("%d", tab[7-i]);
-            }*/
-            //printf(" | ");
+
+            x++;
+
         stockbin[0] = 1;
         stockbin[1] = tab[1];
         stockbin[2] = tab[2];
         stockbin[3] = tab[3];
-        stockbin[4] = tab[0];//là je met les 4premiers bits tab[0] à tab[3] dans stockbin (dans un ordre particulier)
+        stockbin[4] = tab[0];
         stockbin[5] = 1;
         stockbin[6] = 1;
-        stockbin[7] = 0;// je rempli stockbin de 0, 5, 6, et 7 de bits randoms
+        stockbin[7] = 0;
 
-        for(int i = 0; i<8; i++){
-                //printf("%d", stockbin[i]);
-            }
-            //printf(" | ");
+
 
         stockend[0] = 0;
         stockend[1] = tab[5];
         stockend[2] = tab[6];
         stockend[3] = tab[7];
-        stockend[4] = tab[4];// là les 4 derniers bits tab[4] à tab[7] dnas stockend dans un ordre particulier aussi
+        stockend[4] = tab[4];
         stockend[5] = 1;
         stockend[6] = 0;
-        stockend[7] = 1;// je rempli stockbin de 0, 5, 6, et 7 de bits randoms
+        stockend[7] = 1;
 
 
     int res=0;
     for(int i=0; i<8; i++)
     {
       res = res*2 + stockbin[i];
-      //printf("%d ", stockbin[i]);//ici je converti le tableau de 8 bits stockbin en decimal dans la variable res
+
     }
-    //printf("|");
-    //printf("%d ", res);
 
     int res1=0;
     for(int j=0; j<8; j++)
     {
-      res1 = res1*2 + stockend[j];//ici je converti le tableau de 8 bits stockend en decimal dans la variable res1
+      res1 = res1*2 + stockend[j];
     }
     fputc(res, fp);
-    fputc(res1, fp);//ici j'insère res et res1 dans le fichier fp decléré dans le main
+    fputc(res1, fp);
 }
 
 
@@ -115,10 +101,9 @@ void stocke(int valeur,FILE* cible)
 int main(int argc, char const *argv[]) {
 
     int caractere_actuel = 0;
-  FILE *fichier;
-  FILE *fp;
-  int tmp1 = 0;
-
+    FILE *fichier;
+    FILE *fp;
+    int tmp1 = 0;
 
 
   printf("Voulez vous chiffrer(0) ou dechiffrer(1) : ");
@@ -154,10 +139,10 @@ int main(int argc, char const *argv[]) {
   while((caractere_actuel = fgetc(fichier)) != EOF) // je recupère un caractère, je ferai tant qu'il y aura un caractères
     {
       counter++;
-      tmp = caractere_actuel;//j'affecte mon caractère à tmp pour le mettre en decimal
-      //printf("%d ", tmp[k]); jusque là, c ok
-	  chiffre(tmp, fp);//je met mon caractère (decimal) dans la fonction
-	//stocke(chiffre(tmp),fp);
+      tmp = caractere_actuel;
+
+	  chiffre(tmp, fp);
+
     }
     printf("\nIl y a %d caractères dans le fichier\n", counter);
     fclose(fp);
@@ -211,6 +196,5 @@ int main(int argc, char const *argv[]) {
     scanf("%d", &tmp1);
   }
 
-  //printf("\nIl y a %d caractères dans le fichier\n", counter);
   return 0;
 }
