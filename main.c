@@ -53,7 +53,7 @@ int chiffre(int tmp, FILE*fp){
             c = c/2;
 
             x++;
-
+        }
         stockbin[0] = 1;
         stockbin[1] = tab[1];
         stockbin[2] = tab[2];
@@ -62,7 +62,6 @@ int chiffre(int tmp, FILE*fp){
         stockbin[5] = 1;
         stockbin[6] = 1;
         stockbin[7] = 0;
-
 
 
         stockend[0] = 0;
@@ -79,9 +78,7 @@ int chiffre(int tmp, FILE*fp){
     for(int i=0; i<8; i++)
     {
       res = res*2 + stockbin[i];
-
     }
-
     int res1=0;
     for(int j=0; j<8; j++)
     {
@@ -91,11 +88,9 @@ int chiffre(int tmp, FILE*fp){
     fputc(res1, fp);
 }
 
-
 void stocke(int valeur,FILE* cible)
 {
   fputc(valeur, cible);
-
 }
 
 int main(int argc, char const *argv[]) {
@@ -104,6 +99,25 @@ int main(int argc, char const *argv[]) {
     FILE *fichier;
     FILE *fp;
     int tmp1 = 0;
+    char c1[9], c2[9], c3[9], c4[9];
+
+    FILE *matrice = fopen("key.txt", "rb");
+    if (matrice == NULL) {
+      "Impossible d'ouvrir le fichier contenant la clé !";
+      return 1;
+    }
+    if (fscanf(matrice, "G4C=[%[01] %[01] %[01] %[01]]", c1, c2, c3, c4) != 4) {
+        printf("Clé incorrect !");
+        fclose(matrice);
+        return 1;
+    }
+    if (strlen(c1) != 8 || strlen(c2) != 8 || strlen(c3) != 8 || strlen(c4) != 8) {
+        printf("Clé incorrect !");
+        fclose(matrice);
+        return 1;
+    }
+
+
 
 
   printf("Voulez vous chiffrer(0) ou dechiffrer(1) : ");
@@ -140,17 +154,14 @@ int main(int argc, char const *argv[]) {
     {
       counter++;
       tmp = caractere_actuel;
-
-	  chiffre(tmp, fp);
-
+      chiffre(tmp, fp);
     }
     printf("\nIl y a %d caractères dans le fichier\n", counter);
     fclose(fp);
   fclose(fichier);
-  }else if(tmp1 == 1){
-
+  } else if(tmp1 == 1){
        int tmp[2];
-  int k=0;
+       int k=0;
   char nomfichieradechiffrer[100] = "";
   printf("Quel fichier voulez vous dechiffrer ? -> ");
   fflush(stdin);
@@ -162,7 +173,7 @@ int main(int argc, char const *argv[]) {
 
   fichier = fopen(nomfichieradechiffrer, "rb");
   if (fichier == NULL) {
-    printf("impossible de lire epreuve2.mp3c, désolé\n");
+    printf("impossible de lire %s, désolé\n", nomfichieradechiffrer);
     exit(0);
   }
 
@@ -170,7 +181,7 @@ int main(int argc, char const *argv[]) {
   fp = fopen(nomfichieradechiffrer, "wb");
   if (fp == NULL)
     {
-    printf("impossible d'ecrire epreuve2.mp3\n");
+    printf("impossible d'ecrire dans %s\n", nomfichieradechiffrer);
     exit(0);
     }
 
@@ -187,12 +198,10 @@ int main(int argc, char const *argv[]) {
       }
     }
 
-  printf("\nIl y a %d caractères dans le fichier\n", counter);
-
   fclose(fp);
   fclose(fichier);
   }else{
-    printf("votre réponse ne correspond pas, veuillez choisir entre le chiffrage(0) et le dechiffrage(1)");
+    printf("Votre réponse ne correspond pas, veuillez choisir entre le chiffrage(0) et le dechiffrage(1)");
     scanf("%d", &tmp1);
   }
 
