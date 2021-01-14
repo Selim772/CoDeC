@@ -99,19 +99,19 @@ int main(int argc, char const *argv[]) {
     FILE *fichier;
     FILE *fp;
     int tmp1 = 0;
-    char c1[9], c2[9], c3[9], c4[9];
+    char firstbit[9], secondbit[9], thirdbit[9], fourthbit[9];
 
     FILE *matrice = fopen("key.txt", "rb");
     if (matrice == NULL) {
       "Impossible d'ouvrir le fichier contenant la clé !";
       return 1;
     }
-    if (fscanf(matrice, "G4C=[%[01] %[01] %[01] %[01]]", c1, c2, c3, c4) != 4) {
+    if (fscanf(matrice, "G4C=[%[01] %[01] %[01] %[01]]", firstbit, secondbit, thirdbit, fourthbit) != 4) {
         printf("Clé incorrect !");
         fclose(matrice);
         return 1;
     }
-    if (strlen(c1) != 8 || strlen(c2) != 8 || strlen(c3) != 8 || strlen(c4) != 8) {
+    if (strlen(firstbit) != 8 || strlen(secondbit) != 8 || strlen(thirdbit) != 8 || strlen(fourthbit) != 8) {
         printf("Clé incorrect !");
         fclose(matrice);
         return 1;
